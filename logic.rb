@@ -17,6 +17,7 @@ class Logic
    end
 
   def read_result
+# りんご、バナナの初期値(x、y)をファイルから読み込む
     tmp_x = []
     open("result01/x座標のリスト.txt","r") { |fp|
       fp.each {|l| tmp_x << l.chomp.to_i}
@@ -31,6 +32,7 @@ class Logic
       @location_fruits[i] = [tmp_x[i], tmp_y[i]]
     end
 
+#　りんごかバナナかをファイルから読みこむ
     open("result01/フルーツのリスト(りんご_ 1、バナナ_-1).txt") { |fp|
       fp.each_with_index {|fruit, i| @fruits[i] = fruit.chomp.to_i }
     }
@@ -45,18 +47,21 @@ class Logic
 
   def logic
     @num_fruits.times do |id_fruit|
+# 第1層目
       if @weights[0] * @location_fruits[id_fruit][0]/240.0 + @weights[1] * @location_fruits[id_fruit][1]/180.0 + @weights[2] > 0
         expect_fruit = 1 # :apple
       else
         expect_fruit = -1 # :banana
       end
 
+# 第2層目
       if @weights[3] * expect_fruit + @weights[4] > 0
         expect_fruit = 1
       else
         expect_fruit = -1
       end
 
+# 勾配
       df = @fruits[id_fruit] - expect_fruit
 #      if @fruits[id_fruit] == expect_fruit
 #        df = 0
@@ -67,6 +72,8 @@ class Logic
 #          df = -2
 #        end
 #      end
+    
+# 学習、重みの計算
       @weights[0] += @speed * df * @location_fruits[id_fruit][0]
       @weights[1] += @speed * df * @location_fruits[id_fruit][1]
       @weights[2] += @speed * df
