@@ -5,7 +5,8 @@ class Logic
 #    @fruits = Array.new(@num_fruits, :apple)
 #    @fruits[rand(0..9)] = :banana
 #    pp @fruits
-    @weights = [rand(-1.0 .. 1.0), rand(-1.0 .. 1.0), rand(-1.0 .. 1.0)]
+#    @weights = [rand(-1.0 .. 1.0)] * 5
+    @weights = [0.3606003870509211, 0.3606003870509211, 0.3606003870509211, 0.3606003870509211, 0.3606003870509211]
     @location_fruits = []
     @fruits = []
     @speed = 0.01
@@ -19,23 +20,29 @@ class Logic
   def read_result
 # りんご、バナナの初期値(x、y)をファイルから読み込む
     tmp_x = []
-    open("result01/x座標のリスト.txt","r") { |fp|
-      fp.each {|l| tmp_x << l.chomp.to_i}
-    }
+    open("result01/x座標のリスト.txt","r") do |fp|
+      fp.each do |l|
+         tmp_x << l.chomp.to_i
+      end
+    end
 
     tmp_y = []
-    open("result01/y座標のリスト.txt","r") { |fp|
-      fp.each {|l| tmp_y << l.chomp.to_i}
-    }
+    open("result01/y座標のリスト.txt","r") do |fp|
+      fp.each do |l|
+        tmp_y << l.chomp.to_i
+      end
+    end
 
     @num_fruits.times do |i|
-      @location_fruits[i] = [tmp_x[i], tmp_y[i]]
+      @location_fruits << [tmp_x[i], tmp_y[i]]
     end
 
 #　りんごかバナナかをファイルから読みこむ
-    open("result01/フルーツのリスト(りんご_ 1、バナナ_-1).txt") { |fp|
-      fp.each_with_index {|fruit, i| @fruits[i] = fruit.chomp.to_i }
-    }
+    open("result01/フルーツのリスト(りんご_ 1、バナナ_-1).txt") do |fp|
+      fp.each do |l|
+        @fruits << l.chomp.to_i
+      end
+    end
 
   end
 
