@@ -20,14 +20,14 @@ class Logic
   def read_result
 # りんご、バナナの初期値(x、y)をファイルから読み込む
     tmp_x = []
-    open("result01/x座標のリスト.txt","r") do |fp|
+    open("result03/x座標のリスト.txt","r") do |fp|
       fp.each do |l|
          tmp_x << l.chomp.to_i
       end
     end
 
     tmp_y = []
-    open("result01/y座標のリスト.txt","r") do |fp|
+    open("result03/y座標のリスト.txt","r") do |fp|
       fp.each do |l|
         tmp_y << l.chomp.to_i
       end
@@ -38,7 +38,7 @@ class Logic
     end
 
 #　りんごかバナナかをファイルから読みこむ
-    open("result01/フルーツのリスト(りんご_ 1、バナナ_-1).txt") do |fp|
+    open("result03/フルーツのリスト(りんご_ 1、バナナ_-1).txt") do |fp|
       fp.each do |l|
         @fruits << l.chomp.to_i
       end
